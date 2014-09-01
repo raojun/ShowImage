@@ -12,7 +12,6 @@ Widget::Widget(QWidget *parent) :
 {
     ui->setupUi(this);
 
-
     openbutton->setObjectName("OpenButton");
     openbutton->setText(tr("打开图片"));
     openbutton->setGeometry(50,10,60,20);//设置button位置和大小
@@ -39,6 +38,7 @@ Widget::Widget(QWidget *parent) :
 
     connect(openbutton,SIGNAL(clicked()),this,SLOT(OpenPhoto()));
     connect(amplifybutton,SIGNAL(clicked()),this,SLOT(AmplifyPhoto()));
+    connect(shrinkbutton,SIGNAL(clicked()),this,SLOT(ShrinkPhoto()));
     connect(fullscreenbutton,SIGNAL(clicked()),this,SLOT(FullScreen()));
 }
 
@@ -91,31 +91,40 @@ void Widget::LastPhoto()
 //放大
 void Widget::AmplifyPhoto()
 {
-//    float x,y;
-//    QPixmap pixmap(filename);
-//    x=pixmap.width();
-//    y=pixmap.height();
-//    float x_amplify,y_amplify;
-//    x_amplify=label->height()*x/y;
-//    y_amplify=label->height();
+    float x,y;
+    QPixmap pixmap(filename);
+    x=pixmap.width();
+    y=pixmap.height();
+    float x_amplify,y_amplify;
+    x_amplify=label->height()*x/y;
+    y_amplify=label->height();
 
-//    pixmap=pixmap.scaled(x_amplify*1.5,y_amplify*1.5,Qt::KeepAspectRatio);
+    pixmap=pixmap.scaled(x_amplify*1.5,y_amplify*1.5,Qt::KeepAspectRatio);
 
-//    label->setPixmap(pixmap);
-//    label->show();
+    label->setPixmap(pixmap);
+    label->show();
 }
 
 //缩小
 void Widget::ShrinkPhoto()
 {
+    float x,y;
+    QPixmap pixmap(filename);
+    x=pixmap.width();
+    y=pixmap.height();
+    float x_amplify,y_amplify;
+    x_amplify=label->height()*x/y;
+    y_amplify=label->height();
 
+    pixmap=pixmap.scaled(x_amplify*0.5,y_amplify*0.5,Qt::KeepAspectRatio);
+
+    label->setPixmap(pixmap);
+    label->show();
 }
 
 //全屏显示
 void Widget::FullScreen()
 {
-
-
     //全屏显示————隐藏QWidget上的所有控件，并重新绘制一个大小为1366*768的label，再显示
     //1.隐藏所有Button
     openbutton->hide();
@@ -144,7 +153,6 @@ void Widget::FullScreen()
     //4.让Widget全屏
     //注意：若将此步放在第一步，则显示效果不好
     this->showFullScreen();
-
 }
 
 //退出全屏
@@ -180,4 +188,10 @@ void Widget::keyPressEvent(QKeyEvent *event)
         this->showNormal();
 
     }
+}
+
+//滚轮实现放大缩小
+void Widget::wheelEvent(QWheelEvent *event)
+{
+
 }

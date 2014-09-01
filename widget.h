@@ -28,6 +28,8 @@ public:
 private:
     Ui::Widget *ui;
 
+        float x_amplify,y_amplify;
+
     void keyPressEvent(QKeyEvent *event);
 
 private slots:
@@ -37,6 +39,7 @@ private slots:
     void AmplifyPhoto();
     void ShrinkPhoto();
     void FullScreen();
+    void wheelEvent(QWheelEvent *event);
 };
 
 #endif // WIDGET_H
